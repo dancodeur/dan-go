@@ -10,23 +10,23 @@ import (
 // (et non dans une variable globale) car help doit pouvoir la lire.
 func newCommands() map[string]cliCommand {
 	list := []cliCommand{
-		{name: "help", description: "Show this message", callback: commandHelp},
-		{name: "map", description: "List the known regions", callback: commandMap},
-		{name: "travel", arguments: "<region>", description: "Travel to a connected region", callback: commandTravel},
-		{name: "look", description: "Describe your surroundings", callback: commandLook},
-		{name: "explore", description: "Wander the region (risk an encounter)", callback: commandExplore},
-		{name: "fight", description: "Fight the foe for one round", callback: commandFight},
-		{name: "flee", description: "Try to run away from the foe", callback: commandFlee},
-		{name: "rest", description: "Heal fully (once per region visit)", callback: commandRest},
-		{name: "character", description: "Show your character sheet", callback: commandCharacter},
-		{name: "slain", description: "List the monsters you have slain", callback: commandSlain},
-		{name: "bestiary", description: "List the monsters of the Open5e API", callback: commandBestiary},
-		{name: "next", description: "Next page of the bestiary", callback: commandNextPage},
-		{name: "prev", description: "Previous page of the bestiary", callback: commandPreviousPage},
-		{name: "inspect", arguments: "<monster>", description: "Show a monster's stat block", callback: commandInspect},
-		{name: "save", description: "Save the game", callback: commandSave},
-		{name: "load", description: "Load the saved game", callback: commandLoad},
-		{name: "quit", description: "Leave the game", callback: commandQuit},
+		{name: "help", description: "Affiche cette aide", callback: commandHelp},
+		{name: "map", description: "Liste les régions connues", callback: commandMap},
+		{name: "travel", arguments: "<region>", description: "Voyage vers une région voisine", callback: commandTravel},
+		{name: "look", description: "Décrit les environs", callback: commandLook},
+		{name: "explore", description: "Explore la région (risque de rencontre)", callback: commandExplore},
+		{name: "fight", description: "Combat l'ennemi pendant un tour", callback: commandFight},
+		{name: "flee", description: "Tente de fuir l'ennemi", callback: commandFlee},
+		{name: "rest", description: "Soigne complètement (une fois par visite)", callback: commandRest},
+		{name: "character", description: "Affiche la fiche du personnage", callback: commandCharacter},
+		{name: "slain", description: "Liste les monstres vaincus", callback: commandSlain},
+		{name: "bestiary", description: "Liste les monstres de l'API Open5e", callback: commandBestiary},
+		{name: "next", description: "Page suivante du bestiaire", callback: commandNextPage},
+		{name: "prev", description: "Page précédente du bestiaire", callback: commandPreviousPage},
+		{name: "inspect", arguments: "<monster>", description: "Affiche la fiche d'un monstre", callback: commandInspect},
+		{name: "save", description: "Sauvegarde la partie", callback: commandSave},
+		{name: "load", description: "Charge la partie sauvegardée", callback: commandLoad},
+		{name: "quit", description: "Quitte le jeu", callback: commandQuit},
 	}
 
 	commands := make(map[string]cliCommand, len(list))
@@ -55,9 +55,9 @@ func commandHelp(s *Session, args []string) error {
 	}
 	sort.Strings(names)
 
-	fmt.Fprintln(s.out, "Grimhold — a dungeon crawler")
+	fmt.Fprintln(s.out, "Grimhold — un jeu d'exploration de donjon")
 	fmt.Fprintln(s.out)
-	fmt.Fprintln(s.out, "Commands:")
+	fmt.Fprintln(s.out, "Commandes :")
 	for _, name := range names {
 		command := s.commands[name]
 		usage := strings.TrimSpace(command.name + " " + command.arguments)

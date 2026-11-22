@@ -4,7 +4,7 @@
     {
       "id": "crossroads",
       "name": "Crossroads",
-      "description": "A weathered signpost leans where five roads meet. The wind carries the smell of rot.",
+      "description": "Un poteau indicateur usé penche là où cinq routes se croisent. Le vent porte une odeur de pourriture.",
       "danger": 0,
       "foes": [],
       "exits": ["ashen-marsh", "whispering-woods", "bone-quarry"]
@@ -12,7 +12,7 @@
     {
       "id": "ashen-marsh",
       "name": "Ashen Marsh",
-      "description": "Fog, iron, and things that breathe under the water.",
+      "description": "Brouillard, fer, et des choses qui respirent sous l'eau.",
       "danger": 1,
       "foes": ["goblin", "skeleton", "ghoul"],
       "exits": ["crossroads", "drowned-chapel"]
@@ -20,7 +20,7 @@
     {
       "id": "whispering-woods",
       "name": "Whispering Woods",
-      "description": "The trees lean close and the branches murmur your name.",
+      "description": "Les arbres se penchent vers toi et les branches murmurent ton nom.",
       "danger": 1,
       "foes": ["wolf", "giant-rat", "bandit"],
       "exits": ["crossroads", "bone-quarry"]
@@ -28,7 +28,7 @@
     {
       "id": "bone-quarry",
       "name": "Bone Quarry",
-      "description": "Pale stone, pale dust, and pale shapes that move when you look away.",
+      "description": "Pierre pâle, poussière pâle, et des formes pâles qui bougent dès que tu détournes le regard.",
       "danger": 2,
       "foes": ["skeleton", "gnoll", "zombie"],
       "exits": ["crossroads", "whispering-woods", "obsidian-keep"]
@@ -36,7 +36,7 @@
     {
       "id": "drowned-chapel",
       "name": "Drowned Chapel",
-      "description": "A sunken altar, black water, and a bell that rings with no one to pull it.",
+      "description": "Un autel englouti, de l'eau noire, et une cloche qui sonne sans personne pour la tirer.",
       "danger": 2,
       "foes": ["ghoul", "shadow", "zombie"],
       "exits": ["ashen-marsh", "obsidian-keep"]
@@ -44,7 +44,7 @@
     {
       "id": "obsidian-keep",
       "name": "Obsidian Keep",
-      "description": "A fortress of black glass. Every window watches you.",
+      "description": "Une forteresse de verre noir. Chaque fenêtre te regarde.",
       "danger": 3,
       "foes": ["wight", "ogre", "ghast"],
       "exits": ["bone-quarry", "drowned-chapel"]
