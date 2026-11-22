@@ -1,0 +1,53 @@
+{
+  "start": "crossroads",
+  "regions": [
+    {
+      "id": "crossroads",
+      "name": "Crossroads",
+      "description": "A weathered signpost leans where five roads meet. The wind carries the smell of rot.",
+      "danger": 0,
+      "foes": [],
+      "exits": ["ashen-marsh", "whispering-woods", "bone-quarry"]
+    },
+    {
+      "id": "ashen-marsh",
+      "name": "Ashen Marsh",
+      "description": "Fog, iron, and things that breathe under the water.",
+      "danger": 1,
+      "foes": ["goblin", "skeleton", "ghoul"],
+      "exits": ["crossroads", "drowned-chapel"]
+    },
+    {
+      "id": "whispering-woods",
+      "name": "Whispering Woods",
+      "description": "The trees lean close and the branches murmur your name.",
+      "danger": 1,
+      "foes": ["wolf", "giant-rat", "bandit"],
+      "exits": ["crossroads", "bone-quarry"]
+    },
+    {
+      "id": "bone-quarry",
+      "name": "Bone Quarry",
+      "description": "Pale stone, pale dust, and pale shapes that move when you look away.",
+      "danger": 2,
+      "foes": ["skeleton", "gnoll", "zombie"],
+      "exits": ["crossroads", "whispering-woods", "obsidian-keep"]
+    },
+    {
+      "id": "drowned-chapel",
+      "name": "Drowned Chapel",
+      "description": "A sunken altar, black water, and a bell that rings with no one to pull it.",
+      "danger": 2,
+      "foes": ["ghoul", "shadow", "zombie"],
+      "exits": ["ashen-marsh", "obsidian-keep"]
+    },
+    {
+      "id": "obsidian-keep",
+      "name": "Obsidian Keep",
+      "description": "A fortress of black glass. Every window watches you.",
+      "danger": 3,
+      "foes": ["wight", "ogre", "ghast"],
+      "exits": ["bone-quarry", "drowned-chapel"]
+    }
+  ]
+}
