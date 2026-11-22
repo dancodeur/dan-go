@@ -52,7 +52,7 @@ func New(dungeon *game.Game, api MonsterAPI, savePath string, out io.Writer) *Se
 
 // Run lit une commande par ligne jusqu'à "quit" ou la fin de l'entrée.
 func (s *Session) Run(in io.Reader) error {
-	fmt.Fprintln(s.out, ansi.Bold("Welcome to Grimhold.")+" Type help to see the commands.")
+	fmt.Fprintln(s.out, ansi.Bold("Bienvenue à Grimhold.")+" Tape help pour voir les commandes.")
 
 	scanner := bufio.NewScanner(in)
 	for !s.finished {
@@ -65,7 +65,7 @@ func (s *Session) Run(in io.Reader) error {
 	}
 
 	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("reading input: %w", err)
+		return fmt.Errorf("lecture de la saisie : %w", err)
 	}
 	return nil
 }
@@ -80,7 +80,7 @@ func (s *Session) execute(line string) {
 
 	command, found := s.commands[words[0]]
 	if !found {
-		fmt.Fprintf(s.out, "Unknown command %q. Type help to see the commands.\n", words[0])
+		fmt.Fprintf(s.out, "Commande inconnue %q. Tape help pour voir les commandes.\n", words[0])
 		return
 	}
 

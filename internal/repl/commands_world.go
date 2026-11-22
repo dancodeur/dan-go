@@ -14,21 +14,21 @@ func commandMap(s *Session, args []string) error {
 	}
 
 	current := s.game.CurrentRegion()
-	fmt.Fprintln(s.out, "Known regions:")
+	fmt.Fprintln(s.out, "Régions connues :")
 	for _, region := range s.game.World.Regions {
 		marker := " "
 		if region.ID == current.ID {
 			marker = ">"
 		}
-		fmt.Fprintf(s.out, "%s %s [%s] - danger: %s\n", marker, region.Name, region.ID, ansi.DangerLabel(region.Danger))
-		fmt.Fprintf(s.out, "    exits: %s\n", strings.Join(region.Exits, ", "))
+		fmt.Fprintf(s.out, "%s %s [%s] - danger : %s\n", marker, region.Name, region.ID, ansi.DangerLabel(region.Danger))
+		fmt.Fprintf(s.out, "    sorties : %s\n", strings.Join(region.Exits, ", "))
 	}
 	return nil
 }
 
 func commandTravel(s *Session, args []string) error {
 	if len(args) == 0 {
-		return errors.New("usage: travel <region>")
+		return errors.New("usage : travel <region>")
 	}
 
 	// "travel ashen marsh" est compris comme "ashen-marsh".
@@ -51,8 +51,8 @@ func commandLook(s *Session, args []string) error {
 	region := s.game.CurrentRegion()
 	fmt.Fprintln(s.out, ansi.Bold(region.Name))
 	fmt.Fprintln(s.out, region.Description)
-	fmt.Fprintf(s.out, "Exits: %s\n", strings.Join(region.Exits, ", "))
-	fmt.Fprintf(s.out, "Danger: %s\n", ansi.DangerLabel(region.Danger))
+	fmt.Fprintf(s.out, "Sorties : %s\n", strings.Join(region.Exits, ", "))
+	fmt.Fprintf(s.out, "Danger : %s\n", ansi.DangerLabel(region.Danger))
 	return nil
 }
 
@@ -66,6 +66,6 @@ func (s *Session) scoutCurrentRegion() {
 	if err := s.api.Prefetch(foes); err != nil {
 		// Souvent la même panne pour chaque ennemi : on affiche seulement la première.
 		firstError, _, _ := strings.Cut(err.Error(), "\n")
-		fmt.Fprintln(s.out, ansi.Dim("(could not scout ahead: "+firstError+")"))
+		fmt.Fprintln(s.out, ansi.Dim("(repérage impossible : "+firstError+")"))
 	}
 }

@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	ErrInFight    = errors.New("fight or flee")
-	ErrNotInFight = errors.New("you are not in a fight, try explore")
-	ErrNoSave     = errors.New("no save file found")
+	ErrInFight    = errors.New("utilise fight ou flee")
+	ErrNotInFight = errors.New("tu n'es pas en combat, essaie explore")
+	ErrNoSave     = errors.New("aucune sauvegarde trouvée")
 )
 
 // MonsterSource donne les fiches de monstres (le client Open5e, ou un faux dans les tests).
@@ -76,13 +76,13 @@ func (g *Game) Travel(regionID string) (string, error) {
 	current := g.CurrentRegion()
 	destination, found := g.World.Region(regionID)
 	if !found || !current.HasExit(regionID) {
-		return "", fmt.Errorf("you cannot travel to %q from %s (exits: %s)",
+		return "", fmt.Errorf("tu ne peux pas aller vers %q depuis %s (sorties : %s)",
 			regionID, current.Name, strings.Join(current.Exits, ", "))
 	}
 
 	g.State.Location = regionID
 	g.State.Rested = false
-	return fmt.Sprintf("You travel to %s. %s", destination.Name, destination.Description), nil
+	return fmt.Sprintf("Tu voyages vers %s. %s", destination.Name, destination.Description), nil
 }
 
 // Explore cherche une rencontre dans la région et démarre un combat.
@@ -93,18 +93,18 @@ func (g *Game) Explore() (string, error) {
 
 	region := g.CurrentRegion()
 	if len(region.Foes) == 0 {
-		return "You wander around, but nothing stirs.", nil
+		return "Tu erres un moment, mais rien ne bouge.", nil
 	}
 
 	monster, err := g.rollEncounter(region)
 	if err != nil {
-		return "", fmt.Errorf("exploring %s: %w", region.Name, err)
+		return "", fmt.Errorf("exploration de %s : %w", region.Name, err)
 	}
 
 	hitPoints := max(monster.HitPoints, 1)
 	g.Foe = &Foe{Monster: monster, HP: hitPoints, MaxHP: hitPoints}
 
-	return fmt.Sprintf("%s emerges from the shadows! (challenge %s, AC %d, HP %d)\nType fight to attack or flee to run.",
+	return fmt.Sprintf("%s surgit de l'ombre ! (FP %s, CA %d, PV %d)\nTape fight pour attaquer ou flee pour fuir.",
 		monster.Name, monster.ChallengeRating, monster.ArmorClass, hitPoints), nil
 }
 
@@ -114,12 +114,12 @@ func (g *Game) Rest() (string, error) {
 		return "", err
 	}
 	if g.State.Rested {
-		return "", errors.New("you already rested here, travel somewhere else first")
+		return "", errors.New("tu t'es déjà reposé ici, va d'abord ailleurs")
 	}
 
 	g.State.Character.HP = g.State.Character.MaxHP
 	g.State.Rested = true
-	return "You rest until dawn and feel fully healed.", nil
+	return "Tu te reposes jusqu'à l'aube et te sens complètement guéri.", nil
 }
 
 // rollEncounter tire un ennemi au hasard dans la région. Plus la région est
@@ -146,5 +146,5 @@ func (g *Game) blockedByFight(action string) error {
 	if g.Foe == nil {
 		return nil
 	}
-	return fmt.Errorf("you cannot %s while fighting %s: %w", action, g.Foe.Monster.Name, ErrInFight)
+	return fmt.Errorf("la commande %s est impossible pendant le combat contre %s : %w", action, g.Foe.Monster.Name, ErrInFight)
 }

@@ -39,7 +39,7 @@ func newCommands() map[string]cliCommand {
 // checkNoArgs refuse les arguments en trop pour les commandes qui n'en prennent pas.
 func checkNoArgs(args []string, commandName string) error {
 	if len(args) > 0 {
-		return fmt.Errorf("usage: %s (this command takes no arguments)", commandName)
+		return fmt.Errorf("usage : %s (cette commande n'a pas d'argument)", commandName)
 	}
 	return nil
 }
@@ -73,7 +73,7 @@ func commandSave(s *Session, args []string) error {
 	if err := s.game.Save(s.savePath); err != nil {
 		return err
 	}
-	fmt.Fprintf(s.out, "Game saved to %s.\n", s.savePath)
+	fmt.Fprintf(s.out, "Partie sauvegardée dans %s.\n", s.savePath)
 	return nil
 }
 
@@ -84,7 +84,7 @@ func commandLoad(s *Session, args []string) error {
 	if err := s.game.Load(s.savePath); err != nil {
 		return err
 	}
-	fmt.Fprintf(s.out, "Game loaded. You are at %s.\n", s.game.CurrentRegion().Name)
+	fmt.Fprintf(s.out, "Partie chargée. Tu es à %s.\n", s.game.CurrentRegion().Name)
 	return nil
 }
 
@@ -92,7 +92,7 @@ func commandQuit(s *Session, args []string) error {
 	if err := checkNoArgs(args, "quit"); err != nil {
 		return err
 	}
-	fmt.Fprintln(s.out, "Farewell, wanderer.")
+	fmt.Fprintln(s.out, "Adieu, voyageur.")
 	s.finished = true
 	return nil
 }

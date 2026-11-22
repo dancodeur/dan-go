@@ -20,14 +20,14 @@ func ParseDice(text string) (Dice, error) {
 
 	countText, rest, found := strings.Cut(cleaned, "d")
 	if !found {
-		return Dice{}, fmt.Errorf("invalid dice %q: missing 'd'", text)
+		return Dice{}, fmt.Errorf("dés %q invalides : il manque le 'd'", text)
 	}
 
 	count := 1
 	if countText != "" {
 		parsedCount, err := strconv.Atoi(countText)
 		if err != nil {
-			return Dice{}, fmt.Errorf("invalid dice %q: bad dice count: %w", text, err)
+			return Dice{}, fmt.Errorf("dés %q invalides : nombre de dés incorrect : %w", text, err)
 		}
 		count = parsedCount
 	}
@@ -40,19 +40,19 @@ func ParseDice(text string) (Dice, error) {
 
 	sides, err := strconv.Atoi(sidesText)
 	if err != nil {
-		return Dice{}, fmt.Errorf("invalid dice %q: bad number of sides: %w", text, err)
+		return Dice{}, fmt.Errorf("dés %q invalides : nombre de faces incorrect : %w", text, err)
 	}
 
 	bonus := 0
 	if bonusText != "" {
 		bonus, err = strconv.Atoi(bonusText)
 		if err != nil {
-			return Dice{}, fmt.Errorf("invalid dice %q: bad bonus: %w", text, err)
+			return Dice{}, fmt.Errorf("dés %q invalides : bonus incorrect : %w", text, err)
 		}
 	}
 
 	if count < 1 || sides < 1 {
-		return Dice{}, fmt.Errorf("invalid dice %q: count and sides must be at least 1", text)
+		return Dice{}, fmt.Errorf("dés %q invalides : il faut au moins 1 dé et 1 face", text)
 	}
 	return Dice{Count: count, Sides: sides, Bonus: bonus}, nil
 }

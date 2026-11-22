@@ -33,7 +33,7 @@ func NewCharacter() Character {
 		Level:       1,
 		AttackBonus: startingAttackBonus,
 		ArmorClass:  startingArmorClass,
-		Weapon:      Weapon{Name: "Rusty Sword", Damage: Dice{Count: 1, Sides: 8, Bonus: 1}},
+		Weapon:      Weapon{Name: "Épée rouillée", Damage: Dice{Count: 1, Sides: 8, Bonus: 1}},
 	}
 }
 

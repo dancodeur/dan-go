@@ -60,12 +60,12 @@ func HPBar(current, maxHP int) string {
 func DangerLabel(level int) string {
 	switch level {
 	case 0:
-		return Green("safe")
+		return Green("sûr")
 	case 1:
-		return Yellow("uneasy")
+		return Yellow("inquiétant")
 	case 2:
-		return Red("dangerous")
+		return Red("dangereux")
 	default:
-		return Bold(Red("deadly"))
+		return Bold(Red("mortel"))
 	}
 }

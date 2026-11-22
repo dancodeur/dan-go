@@ -17,15 +17,15 @@ func (g *Game) Save(path string) error {
 
 	data, err := json.MarshalIndent(g.State, "", "  ")
 	if err != nil {
-		return fmt.Errorf("encoding save: %w", err)
+		return fmt.Errorf("encodage de la sauvegarde : %w", err)
 	}
 
 	temporaryPath := path + ".tmp"
 	if err := os.WriteFile(temporaryPath, data, 0o644); err != nil {
-		return fmt.Errorf("writing save: %w", err)
+		return fmt.Errorf("écriture de la sauvegarde : %w", err)
 	}
 	if err := os.Rename(temporaryPath, path); err != nil {
-		return fmt.Errorf("replacing save file: %w", err)
+		return fmt.Errorf("remplacement du fichier de sauvegarde : %w", err)
 	}
 	return nil
 }
@@ -38,15 +38,15 @@ func (g *Game) Load(path string) error {
 		return ErrNoSave
 	}
 	if err != nil {
-		return fmt.Errorf("reading save: %w", err)
+		return fmt.Errorf("lecture de la sauvegarde : %w", err)
 	}
 
 	var state State
 	if err := json.Unmarshal(data, &state); err != nil {
-		return fmt.Errorf("decoding save %s: %w", path, err)
+		return fmt.Errorf("lecture de la sauvegarde %s : %w", path, err)
 	}
 	if _, found := g.World.Region(state.Location); !found {
-		return fmt.Errorf("save %s: unknown region %q", path, state.Location)
+		return fmt.Errorf("sauvegarde %s : région inconnue %q", path, state.Location)
 	}
 	if state.Slain == nil {
 		state.Slain = map[string]int{}

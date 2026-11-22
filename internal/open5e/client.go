@@ -22,7 +22,7 @@ const (
 )
 
 // ErrNotFound est renvoyée quand l'API ne connaît pas le monstre demandé.
-var ErrNotFound = errors.New("monster not found")
+var ErrNotFound = errors.New("monstre introuvable")
 
 // Client interroge l'API et garde les réponses dans le cache.
 type Client struct {
@@ -48,7 +48,7 @@ func (c *Client) ListMonsters(pageURL string) (MonsterPage, error) {
 
 	var page MonsterPage
 	if err := c.getJSON(pageURL, &page); err != nil {
-		return MonsterPage{}, fmt.Errorf("listing monsters: %w", err)
+		return MonsterPage{}, fmt.Errorf("liste des monstres : %w", err)
 	}
 	return page, nil
 }
@@ -90,7 +90,7 @@ func (c *Client) getMonsterBySlug(slug string) (Monster, error) {
 	var monster Monster
 	requestURL := c.baseURL + "/monsters/" + url.PathEscape(slug) + "/"
 	if err := c.getJSON(requestURL, &monster); err != nil {
-		return Monster{}, fmt.Errorf("getting monster %q: %w", slug, err)
+		return Monster{}, fmt.Errorf("récupération du monstre %q : %w", slug, err)
 	}
 	return monster, nil
 }
@@ -99,10 +99,10 @@ func (c *Client) searchMonster(name string) (Monster, error) {
 	var page MonsterPage
 	requestURL := c.baseURL + "/monsters/?search=" + url.QueryEscape(name)
 	if err := c.getJSON(requestURL, &page); err != nil {
-		return Monster{}, fmt.Errorf("searching monster %q: %w", name, err)
+		return Monster{}, fmt.Errorf("recherche du monstre %q : %w", name, err)
 	}
 	if len(page.Results) == 0 {
-		return Monster{}, fmt.Errorf("monster %q: %w", name, ErrNotFound)
+		return Monster{}, fmt.Errorf("monstre %q : %w", name, ErrNotFound)
 	}
 
 	// On préfère le nom exact, sinon le premier résultat.
@@ -121,7 +121,7 @@ func (c *Client) getJSON(requestURL string, target any) error {
 		return err
 	}
 	if err := json.Unmarshal(data, target); err != nil {
-		return fmt.Errorf("decoding response from %s: %w", requestURL, err)
+		return fmt.Errorf("lecture de la réponse de %s : %w", requestURL, err)
 	}
 	return nil
 }
@@ -134,7 +134,7 @@ func (c *Client) fetch(requestURL string) ([]byte, error) {
 	// L'erreur de http.Client contient déjà l'adresse demandée.
 	response, err := c.httpClient.Get(requestURL)
 	if err != nil {
-		return nil, fmt.Errorf("API unreachable: %w", err)
+		return nil, fmt.Errorf("API injoignable : %w", err)
 	}
 	defer response.Body.Close()
 
@@ -142,12 +142,12 @@ func (c *Client) fetch(requestURL string) ([]byte, error) {
 		return nil, fmt.Errorf("%s: %w", requestURL, ErrNotFound)
 	}
 	if response.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("requesting %s: unexpected status %s", requestURL, response.Status)
+		return nil, fmt.Errorf("requête %s : statut inattendu %s", requestURL, response.Status)
 	}
 
 	data, err := io.ReadAll(response.Body)
 	if err != nil {
-		return nil, fmt.Errorf("reading response from %s: %w", requestURL, err)
+		return nil, fmt.Errorf("lecture de la réponse de %s : %w", requestURL, err)
 	}
 
 	c.cache.Set(requestURL, data)

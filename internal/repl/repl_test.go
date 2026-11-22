@@ -93,17 +93,17 @@ func TestBadInputNeverCrashes(t *testing.T) {
 	output := play(t, script)
 
 	for _, expected := range []string{
-		`Unknown command "dance"`,
-		"usage: help",
-		"usage: travel <region>",
-		"cannot travel",
-		"usage: look",
-		"not in a fight",
-		"no next page",
-		"usage: inspect <monster>",
-		`no monster named "nothing"`,
-		"no save file found",
-		"Farewell",
+		`Commande inconnue "dance"`,
+		"usage : help",
+		"usage : travel <region>",
+		"tu ne peux pas aller",
+		"usage : look",
+		"pas en combat",
+		"pas de page suivante",
+		"usage : inspect <monster>",
+		`aucun monstre nommé "nothing"`,
+		"aucune sauvegarde trouvée",
+		"Adieu",
 	} {
 		if !strings.Contains(output, expected) {
 			t.Errorf("output does not contain %q", expected)
@@ -123,7 +123,7 @@ func TestEndOfInputEndsTheSession(t *testing.T) {
 func TestTravelAcceptsSpacesInRegionNames(t *testing.T) {
 	output := play(t, "travel deep woods\nlook\n")
 
-	if !strings.Contains(output, "You travel to Deep Woods") {
+	if !strings.Contains(output, "Tu voyages vers Deep Woods") {
 		t.Errorf("travel did not work: %q", output)
 	}
 }
@@ -131,7 +131,7 @@ func TestTravelAcceptsSpacesInRegionNames(t *testing.T) {
 func TestExploreAndFight(t *testing.T) {
 	output := play(t, "travel deep-woods\nexplore\nfight\nslain\ncharacter\n")
 
-	for _, expected := range []string{"Dummy emerges", "The Dummy falls", "Dummy", "x1", "Level"} {
+	for _, expected := range []string{"Dummy surgit", "Dummy s'effondre", "Dummy", "x1", "Niveau"} {
 		if !strings.Contains(output, expected) {
 			t.Errorf("output does not contain %q:\n%s", expected, output)
 		}
@@ -141,7 +141,7 @@ func TestExploreAndFight(t *testing.T) {
 func TestSaveAndLoadCommands(t *testing.T) {
 	output := play(t, "travel deep-woods\nsave\ntravel camp\nload\nlook\n")
 
-	if !strings.Contains(output, "Game saved") || !strings.Contains(output, "Game loaded. You are at Deep Woods.") {
+	if !strings.Contains(output, "Partie sauvegardée") || !strings.Contains(output, "Partie chargée. Tu es à Deep Woods.") {
 		t.Errorf("save/load did not work:\n%s", output)
 	}
 }
@@ -149,7 +149,7 @@ func TestSaveAndLoadCommands(t *testing.T) {
 func TestBestiaryAndInspect(t *testing.T) {
 	output := play(t, "bestiary\ninspect dummy\n")
 
-	if !strings.Contains(output, "Bestiary (1 monsters)") || !strings.Contains(output, "A weak poke.") {
+	if !strings.Contains(output, "Bestiaire (1 monstres)") || !strings.Contains(output, "A weak poke.") {
 		t.Errorf("bestiary/inspect did not work:\n%s", output)
 	}
 }

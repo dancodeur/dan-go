@@ -35,7 +35,7 @@ func (g *Game) FightRound() (string, error) {
 		damage:      character.Weapon.Damage,
 	}
 
-	damage, line := g.rollAttack("You", playerAttack, g.Foe.Monster.ArmorClass)
+	damage, line := g.rollAttack("Tu", playerAttack, g.Foe.Monster.ArmorClass)
 	g.Foe.HP -= damage
 	lines := []string{line}
 
@@ -57,10 +57,10 @@ func (g *Game) Flee() (string, error) {
 	if roll >= fleeDifficulty {
 		name := g.Foe.Monster.Name
 		g.Foe = nil
-		return fmt.Sprintf("You escape from the %s. (rolled %d, needed %d)", name, roll, fleeDifficulty), nil
+		return fmt.Sprintf("Tu t'échappes de %s. (jet %d, il fallait %d)", name, roll, fleeDifficulty), nil
 	}
 
-	lines := []string{fmt.Sprintf("You fail to escape! (rolled %d, needed %d)", roll, fleeDifficulty)}
+	lines := []string{fmt.Sprintf("Tu n'arrives pas à fuir ! (jet %d, il fallait %d)", roll, fleeDifficulty)}
 	lines = append(lines, g.foeStrike()...)
 	return strings.Join(lines, "\n"), nil
 }
@@ -70,15 +70,15 @@ func (g *Game) Flee() (string, error) {
 func (g *Game) rollAttack(attackerName string, strike attack, armorClass int) (int, string) {
 	roll := g.rng.Intn(20) + 1
 	total := roll + strike.attackBonus
-	prefix := fmt.Sprintf("%s [%s]: rolled %d + %d = %d vs AC %d.",
+	prefix := fmt.Sprintf("%s [%s] : jet %d + %d = %d contre CA %d.",
 		attackerName, strike.name, roll, strike.attackBonus, total, armorClass)
 
 	if total < armorClass {
-		return 0, prefix + " Miss."
+		return 0, prefix + " Raté."
 	}
 
 	damage := max(strike.damage.Roll(g.rng), 0)
-	return damage, fmt.Sprintf("%s Hit for %d damage.", prefix, damage)
+	return damage, fmt.Sprintf("%s Touché, %d dégâts.", prefix, damage)
 }
 
 // foeStrike fait attaquer l'ennemi avec une de ses attaques, tirée au hasard.
@@ -106,16 +106,16 @@ func (g *Game) winFight() []string {
 	g.State.Slain[monster.Name]++
 	levelsGained := g.State.Character.GainXP(xp)
 
-	lines := []string{fmt.Sprintf("The %s falls! You gain %d XP.", monster.Name, xp)}
+	lines := []string{fmt.Sprintf("%s s'effondre ! Tu gagnes %d XP.", monster.Name, xp)}
 
 	if g.rng.Intn(100) < goldChance {
 		gold := 1 + g.rng.Intn(maxGoldFound)
 		g.State.Gold += gold
-		lines = append(lines, fmt.Sprintf("You find %d gold.", gold))
+		lines = append(lines, fmt.Sprintf("Tu trouves %d pièces d'or.", gold))
 	}
 	if levelsGained > 0 {
 		character := g.State.Character
-		lines = append(lines, fmt.Sprintf("You reach level %d! Max HP is now %d.", character.Level, character.MaxHP))
+		lines = append(lines, fmt.Sprintf("Tu passes au niveau %d ! Tes PV max sont maintenant de %d.", character.Level, character.MaxHP))
 	}
 	return lines
 }
@@ -129,8 +129,8 @@ func (g *Game) loseFight() []string {
 	g.State.Rested = false
 
 	return []string{
-		"Everything goes dark...",
-		fmt.Sprintf("You wake up at %s with 1 HP and your pride wounded.", g.CurrentRegion().Name),
+		"Tout devient noir...",
+		fmt.Sprintf("Tu te réveilles à %s avec 1 PV et l'orgueil blessé.", g.CurrentRegion().Name),
 	}
 }
 
@@ -155,7 +155,7 @@ func monsterAttacks(monster open5e.Monster) []attack {
 	}
 
 	if len(attacks) == 0 {
-		attacks = append(attacks, attack{name: "Wild swing", attackBonus: 2, damage: Dice{Count: 1, Sides: 4}})
+		attacks = append(attacks, attack{name: "Coup désespéré", attackBonus: 2, damage: Dice{Count: 1, Sides: 4}})
 	}
 	return attacks
 }

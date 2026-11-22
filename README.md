@@ -1,5 +1,7 @@
 # Grimhold
 
+Auteur : Dan David Elenga (LDF A5)
+
 Jeu d'exploration de donjon en mode texte, qui se joue dans le terminal. Tu explores
 des régions maudites, tu tombes sur des ennemis, tu les combats avec des dés et tu
 gardes la liste de tes victoires. Les monstres viennent en direct de l'API

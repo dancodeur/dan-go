@@ -68,13 +68,13 @@ func commandCharacter(s *Session, args []string) error {
 	}
 
 	character := s.game.State.Character
-	fmt.Fprintln(s.out, ansi.Bold("Character sheet"))
-	fmt.Fprintf(s.out, "  Level    %d (XP %d/%d)\n", character.Level, character.XP, character.XPForNextLevel())
-	fmt.Fprintf(s.out, "  HP       %s\n", ansi.HPBar(character.HP, character.MaxHP))
-	fmt.Fprintf(s.out, "  Attack   +%d\n", character.AttackBonus)
-	fmt.Fprintf(s.out, "  Armor    %d\n", character.ArmorClass)
-	fmt.Fprintf(s.out, "  Weapon   %s (%s)\n", character.Weapon.Name, character.Weapon.Damage)
-	fmt.Fprintf(s.out, "  Gold     %d\n", s.game.State.Gold)
+	fmt.Fprintln(s.out, ansi.Bold("Fiche du personnage"))
+	fmt.Fprintf(s.out, "  Niveau   %d (XP %d/%d)\n", character.Level, character.XP, character.XPForNextLevel())
+	fmt.Fprintf(s.out, "  PV       %s\n", ansi.HPBar(character.HP, character.MaxHP))
+	fmt.Fprintf(s.out, "  Attaque  +%d\n", character.AttackBonus)
+	fmt.Fprintf(s.out, "  Armure   %d\n", character.ArmorClass)
+	fmt.Fprintf(s.out, "  Arme     %s (%s)\n", character.Weapon.Name, character.Weapon.Damage)
+	fmt.Fprintf(s.out, "  Or       %d\n", s.game.State.Gold)
 	return nil
 }
 
@@ -85,7 +85,7 @@ func commandSlain(s *Session, args []string) error {
 
 	slain := s.game.State.Slain
 	if len(slain) == 0 {
-		fmt.Fprintln(s.out, "You have not slain anything yet.")
+		fmt.Fprintln(s.out, "Tu n'as encore vaincu aucun monstre.")
 		return nil
 	}
 
@@ -95,7 +95,7 @@ func commandSlain(s *Session, args []string) error {
 	}
 	sort.Strings(names)
 
-	fmt.Fprintln(s.out, ansi.Bold("Slain bestiary"))
+	fmt.Fprintln(s.out, ansi.Bold("Monstres vaincus"))
 	for _, name := range names {
 		fmt.Fprintf(s.out, "  %-20s x%d\n", name, slain[name])
 	}
@@ -114,6 +114,6 @@ func (s *Session) printFoeBar() {
 // printCombatStatus affiche la vie du joueur, puis celle de l'ennemi s'il est encore là.
 func (s *Session) printCombatStatus() {
 	character := s.game.State.Character
-	fmt.Fprintf(s.out, "%-14s %s\n", "You", ansi.HPBar(character.HP, character.MaxHP))
+	fmt.Fprintf(s.out, "%-14s %s\n", "Toi", ansi.HPBar(character.HP, character.MaxHP))
 	s.printFoeBar()
 }

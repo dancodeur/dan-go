@@ -1,4 +1,5 @@
 // Grimhold est un jeu d'exploration de donjon en mode texte.
+// Auteur : Dan David Elenga (LDF A5).
 package main
 
 import (
@@ -22,11 +23,11 @@ const (
 )
 
 func main() {
-	worldPath := flag.String("world", "world.json", "path to the world file")
-	savePath := flag.String("save", "save.json", "path to the save file")
-	apiURL := flag.String("api", open5e.DefaultBaseURL, "base URL of the Open5e API")
-	continueGame := flag.Bool("continue", false, "load the save file at startup")
-	noColor := flag.Bool("no-color", false, "disable ANSI colors")
+	worldPath := flag.String("world", "world.json", "chemin du fichier du monde")
+	savePath := flag.String("save", "save.json", "chemin du fichier de sauvegarde")
+	apiURL := flag.String("api", open5e.DefaultBaseURL, "adresse de base de l'API Open5e")
+	continueGame := flag.Bool("continue", false, "charge la sauvegarde au démarrage")
+	noColor := flag.Bool("no-color", false, "désactive les couleurs ANSI")
 	flag.Parse()
 
 	ansi.Enabled = !*noColor && outputIsTerminal()
@@ -54,9 +55,9 @@ func run(worldPath, savePath, apiURL string, continueGame bool) error {
 		err = dungeon.Load(savePath)
 		switch {
 		case errors.Is(err, game.ErrNoSave):
-			fmt.Println("No save file found, starting a new game.")
+			fmt.Println("Aucune sauvegarde trouvée, nouvelle partie.")
 		case err != nil:
-			return fmt.Errorf("loading save: %w", err)
+			return fmt.Errorf("chargement de la sauvegarde : %w", err)
 		}
 	}
 
