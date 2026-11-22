@@ -11,12 +11,27 @@ Standard library only. Requires Go 1.22 or newer and an internet connection.
 ## Build and run
 
 ```bash
-cd grimhold
 go build -o grimhold ./cmd/grimhold   # build
 ./grimhold                            # run (or: go run ./cmd/grimhold)
 ```
 
-Run it from this folder, because it reads `world.json` from the current directory.
+Run it from the root of the repository, because it reads `world.json` from the current directory.
+
+## Checking the Open5e API yourself
+
+First check that the API answers and has the expected shape (on Windows PowerShell use `curl.exe`):
+
+```bash
+curl https://api.open5e.com/v1/monsters/goblin/
+curl "https://api.open5e.com/v1/monsters/?limit=2"
+```
+
+You should see `armor_class`, `hit_points`, `challenge_rating` and an `actions` list with
+`attack_bonus` and `damage_dice`. The second call should contain `count`, `next` and `results`.
+
+Then try it in the game: `inspect goblin`, `bestiary`, `next`, `travel ashen-marsh`, `explore`.
+If a foe from `world.json` is not found, `explore` says so: fix its name in `world.json`
+(the name is the monster's slug, for example `giant-spider`).
 
 | Flag | Meaning |
 |---|---|
